@@ -5,10 +5,10 @@ pipeline {
 	}
 	
 	environment {
-		PROJECT_ID = 'jenkins-296812'
-                CLUSTER_NAME = 'k8s-cluster'
-                LOCATION = 'us-central1-c'
-                CREDENTIALS_ID = 'kubernetes'		
+		PROJECT_ID = 'eighth-epsilon-461803-i2'
+                CLUSTER_NAME = 'cluster'
+                LOCATION = 'us-central1-a'
+                CREDENTIALS_ID = 'GKE_pass'		
 	}
 	
     stages {
@@ -35,7 +35,7 @@ pipeline {
 		    steps {
 			    sh 'whoami'
 			    script {
-				    myimage = docker.build("ameintu/devops:${env.BUILD_ID}")
+				    myimage = docker.build("xyzxyz62/devops:${env.BUILD_ID}")
 			    }
 		    }
 	    }
@@ -44,8 +44,8 @@ pipeline {
 		    steps {
 			    script {
 				    echo "Push Docker Image"
-				    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-            				sh "docker login -u ameintu -p ${dockerhub}"
+				    withCredentials([string(credentialsId: 'dockerhub_log', variable: 'dockerhub_log')]) {
+            				sh "docker login -u xyzxyz62 -p ${dockerhub_log}"
 				    }
 				        myimage.push("${env.BUILD_ID}")
 				    
